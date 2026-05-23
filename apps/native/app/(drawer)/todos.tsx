@@ -25,21 +25,21 @@ export default function TodosScreen() {
         todos.refetch();
         setNewTodoText("");
       },
-    }),
+    })
   );
   const toggleMutation = useMutation(
     trpc.todo.toggle.mutationOptions({
       onSuccess: () => {
         todos.refetch();
       },
-    }),
+    })
   );
   const deleteMutation = useMutation(
     trpc.todo.delete.mutationOptions({
       onSuccess: () => {
         todos.refetch();
       },
-    }),
+    })
   );
 
   const mutedColor = useThemeColor("muted");
@@ -74,9 +74,11 @@ export default function TodosScreen() {
   return (
     <Container>
       <ScrollView className="flex-1" contentContainerClassName="p-4">
-        <View className="py-4 mb-4">
+        <View className="mb-4 py-4">
           <View className="flex-row items-center justify-between">
-            <Text className="text-2xl font-semibold text-foreground tracking-tight">Tasks</Text>
+            <Text className="text-foreground text-2xl font-semibold tracking-tight">
+              Tasks
+            </Text>
             {totalCount > 0 && (
               <Chip variant="secondary" color="accent" size="sm">
                 <Chip.Label>
@@ -87,7 +89,7 @@ export default function TodosScreen() {
           </View>
         </View>
 
-        <Surface variant="secondary" className="mb-4 p-3 rounded-lg">
+        <Surface variant="secondary" className="mb-4 rounded-lg p-3">
           <View className="flex-row items-center gap-2">
             <View className="flex-1">
               <TextField>
@@ -103,7 +105,11 @@ export default function TodosScreen() {
             </View>
             <Button
               isIconOnly
-              variant={createMutation.isPending || !newTodoText.trim() ? "secondary" : "primary"}
+              variant={
+                createMutation.isPending || !newTodoText.trim()
+                  ? "secondary"
+                  : "primary"
+              }
               isDisabled={createMutation.isPending || !newTodoText.trim()}
               onPress={handleAddTodo}
               size="sm"
@@ -115,7 +121,9 @@ export default function TodosScreen() {
                   name="add"
                   size={20}
                   color={
-                    createMutation.isPending || !newTodoText.trim() ? mutedColor : foregroundColor
+                    createMutation.isPending || !newTodoText.trim()
+                      ? mutedColor
+                      : foregroundColor
                   }
                 />
               )}
@@ -126,26 +134,39 @@ export default function TodosScreen() {
         {isLoading && (
           <View className="items-center justify-center py-12">
             <Spinner size="lg" />
-            <Text className="text-muted text-sm mt-3">Loading tasks...</Text>
+            <Text className="text-muted mt-3 text-sm">Loading tasks...</Text>
           </View>
         )}
 
         {todos?.data && todos.data.length === 0 && !isLoading && (
-          <Surface variant="secondary" className="items-center justify-center py-10 rounded-lg">
+          <Surface
+            variant="secondary"
+            className="items-center justify-center rounded-lg py-10"
+          >
             <Ionicons name="checkbox-outline" size={40} color={mutedColor} />
-            <Text className="text-foreground font-medium mt-3">No tasks yet</Text>
-            <Text className="text-muted text-xs mt-1">Add your first task to get started</Text>
+            <Text className="text-foreground mt-3 font-medium">
+              No tasks yet
+            </Text>
+            <Text className="text-muted mt-1 text-xs">
+              Add your first task to get started
+            </Text>
           </Surface>
         )}
 
         {todos?.data && todos.data.length > 0 && (
           <View className="gap-2">
             {todos.data.map((todo) => (
-              <Surface key={todo.id} variant="secondary" className="p-3 rounded-lg">
+              <Surface
+                key={todo.id}
+                variant="secondary"
+                className="rounded-lg p-3"
+              >
                 <View className="flex-row items-center gap-3">
                   <Checkbox
                     isSelected={todo.completed}
-                    onSelectedChange={() => handleToggleTodo(todo.id, todo.completed)}
+                    onSelectedChange={() =>
+                      handleToggleTodo(todo.id, todo.completed)
+                    }
                   />
                   <View className="flex-1">
                     <Text
@@ -160,7 +181,11 @@ export default function TodosScreen() {
                     onPress={() => handleDeleteTodo(todo.id)}
                     size="sm"
                   >
-                    <Ionicons name="trash-outline" size={16} color={dangerColor} />
+                    <Ionicons
+                      name="trash-outline"
+                      size={16}
+                      color={dangerColor}
+                    />
                   </Button>
                 </View>
               </Surface>

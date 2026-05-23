@@ -15,7 +15,7 @@ app.use(
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
-  }),
+  })
 );
 
 app.all("/api/auth{/*path}", toNodeHandler(auth));
@@ -25,7 +25,7 @@ app.use(
   createExpressMiddleware({
     router: appRouter,
     createContext,
-  }),
+  })
 );
 
 app.use(express.json());
