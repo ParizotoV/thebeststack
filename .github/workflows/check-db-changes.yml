@@ -39,8 +39,8 @@ jobs:
           echo "Arquivos alterados:"
           echo "$CHANGED_FILES"
 
-          DB_CHANGES=$(echo "$CHANGED_FILES" | grep -q "packages/db/src/")
-          OTHER_CHANGES=$(echo "$CHANGED_FILES" | grep -v "packages/db/src/")
+          DB_CHANGES=$(echo "$CHANGED_FILES" | grep -q "packages/db/src/" || true)
+          OTHER_CHANGES=$(echo "$CHANGED_FILES" | grep -v "packages/db/src/" || true)
 
           DB_COUNT=$(echo "$DB_CHANGES" | grep -c . || echo "0")
           OTHER_COUNT=$(echo "$OTHER_CHANGES" | grep -c . || echo "0")
