@@ -5,6 +5,10 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   check-db-changes:
@@ -39,16 +43,16 @@ jobs:
           echo "Arquivos alterados:"
           echo "$CHANGED_FILES"
 
-          DB_CHANGES=$(echo "$CHANGED_FILES" | grep -q "packages/db/src/" || true)
+          DB_CHANGES=$(echo "$CHANGED_FILES" | grep "packages/db/src/" || true)
           OTHER_CHANGES=$(echo "$CHANGED_FILES" | grep -v "packages/db/src/" || true)
 
           DB_COUNT=$(echo "$DB_CHANGES" | grep -c . || echo "0")
           OTHER_COUNT=$(echo "$OTHER_CHANGES" | grep -c . || echo "0")
 
-          if [ $DB_COUNT -gt 0 ] && [ $OTHER_COUNT -eq 0 ]; then
+          if [ "$DB_COUNT" -gt 0 ] && [ "$OTHER_COUNT" -gt 0 ]; then
             echo "Alteração detectada no banco de dados."
             exit 0
-          elif [ $DB_COUNT -gt 0 ] && [ $OTHER_COUNT -eq 0 ]; then
+          elif [ "$DB_COUNT" -gt 0 ] && [ "$OTHER_COUNT" -gt 0 ]; then
             echo "Alteração detectada junto com o banco de dados."
             exit 1
           else
