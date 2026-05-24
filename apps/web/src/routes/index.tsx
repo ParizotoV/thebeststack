@@ -21,9 +21,10 @@ const TITLE_TEXT = `
     ██║       ╚════██║   ██║   ██╔══██║██║     ██╔═██╗
     ██║       ███████║   ██║   ██║  ██║╚██████╗██║  ██╗
     ╚═╝       ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
+    By Parizoto
  `;
 
-function HomeComponent() {
+const HomeComponent = () => {
   const healthCheck = useQuery(trpc.healthCheck.queryOptions());
 
   return (
@@ -48,4 +49,4 @@ function HomeComponent() {
       </div>
     </div>
   );
-}
+};
