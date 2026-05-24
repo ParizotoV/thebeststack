@@ -1,0 +1,42 @@
+name: DB Migrate
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "packages/db/src/migrations/**"
+
+jobs:
+  db-migrate:
+    name: DB Migrate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.18.3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run database migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: pnpm run db:migrate
+
+      - name: Notify success
+        if: success()
+        run: echo "Database migrations completed successfully."
+
+      - name: Notify failure
+        if: failure()
+        run: echo "Database migrations failed. Please check the logs for details."
