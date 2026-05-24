@@ -1,0 +1,57 @@
+name: Check DB Changes
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  check-db-changes:
+    name: Check DB Changes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine the changes
+        run: |
+          echo "Verificando mudanças no banco de dados..."
+
+          if [ "${{ github.event_name }}" == "push" ]; then
+            BASE_COMMIT="HEAD~1"
+            CURRENT_COMMIT="HEAD"
+          else
+            BASE_COMMIT="origin/${{ github.base_ref }}"
+            CURRENT_COMMIT="HEAD"
+          fi
+
+          echo "Arquivos alterados:"
+          CHANGED_FILES=$(git diff --name-only $BASE_COMMIT $CURRENT_COMMIT)
+
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "Nenhuma mudança detectada."
+            exit 0
+          fi
+
+          echo "Arquivos alterados:"
+          echo "$CHANGED_FILES"
+
+          DB_CHANGES=$(echo "$CHANGED_FILES" | grep -q "packages/db/src/")
+          OTHER_CHANGES=$(echo "$CHANGED_FILES" | grep -v "packages/db/src/")
+
+          DB_COUNT=$(echo "$DB_CHANGES" | grep -c . || echo "0")
+          OTHER_COUNT=$(echo "$OTHER_CHANGES" | grep -c . || echo "0")
+
+          if [ $DB_COUNT -gt 0 ] && [ $OTHER_COUNT -eq 0 ]; then
+            echo "Alteração detectada no banco de dados."
+            exit 0
+          elif [ $DB_COUNT -gt 0 ] && [ $OTHER_COUNT -eq 0 ]; then
+            echo "Alteração detectada junto com o banco de dados."
+            exit 1
+          else
+            echo "Nenhuma alteração detectada junto com o banco de dados."
+            exit 0
+          fi
