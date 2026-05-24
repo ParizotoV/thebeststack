@@ -26,6 +26,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Set .env file
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > apps/server/.env
+
       - name: Run database migrations
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
