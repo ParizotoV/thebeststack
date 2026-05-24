@@ -30,7 +30,7 @@ app.use(
 
 app.use(express.json());
 
-app.get("/", (_req, res) => {
+app.get("/", (_request, res) => {
   res.status(200).send("OK");
 });
 

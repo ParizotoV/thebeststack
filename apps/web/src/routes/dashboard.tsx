@@ -18,16 +18,16 @@ export const Route = createFileRoute("/dashboard")({
   },
 });
 
-function RouteComponent() {
+const RouteComponent = () => {
   const { session } = Route.useRouteContext();
 
   const privateData = useQuery(trpc.privateData.queryOptions());
 
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Welcome {session.data?.user.name}</p>
-      <p>API: {privateData.data?.message}</p>
-    </div>
+      <div>
+          <h1>Dashboard</h1>
+          <p>Welcome {session.data?.user.name}</p>
+          <p>API: {privateData.data?.message}</p>
+      </div>
   );
 }

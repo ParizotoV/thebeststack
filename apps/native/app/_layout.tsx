@@ -12,30 +12,30 @@ export const unstable_settings = {
   initialRouteName: "(drawer)",
 };
 
-function StackLayout() {
+const StackLayout = () => {
   return (
-    <Stack screenOptions={{}}>
-      <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="modal"
-        options={{ title: "Modal", presentation: "modal" }}
-      />
-    </Stack>
+      <Stack screenOptions={{}}>
+          <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+          <Stack.Screen
+              name="modal"
+              options={{ title: "Modal", presentation: "modal" }}
+          />
+      </Stack>
   );
 }
 
 export default function Layout() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <KeyboardProvider>
-          <AppThemeProvider>
-            <HeroUINativeProvider>
-              <StackLayout />
-            </HeroUINativeProvider>
-          </AppThemeProvider>
-        </KeyboardProvider>
-      </GestureHandlerRootView>
-    </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+              <KeyboardProvider>
+                  <AppThemeProvider>
+                      <HeroUINativeProvider>
+                          <StackLayout />
+                      </HeroUINativeProvider>
+                  </AppThemeProvider>
+              </KeyboardProvider>
+          </GestureHandlerRootView>
+      </QueryClientProvider>
   );
 }

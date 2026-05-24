@@ -23,25 +23,25 @@ export default function UserMenu() {
 
   if (!session) {
     return (
-      <Link to="/login">
-        <Button variant="outline">Sign In</Button>
-      </Link>
+        <Link to="/login">
+            <Button variant="outline">Sign In</Button>
+        </Link>
     );
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="outline" />}>
-        {session.user.name}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-card">
-        <DropdownMenuGroup>
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>{session.user.email}</DropdownMenuItem>
-          <DropdownMenuItem
-            variant="destructive"
-            onClick={() => {
+      <DropdownMenu>
+          <DropdownMenuTrigger render={<Button variant="outline" />}>
+              {session.user.name}
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-card">
+              <DropdownMenuGroup>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>{session.user.email}</DropdownMenuItem>
+                  <DropdownMenuItem
+                      variant="destructive"
+                      onClick={() => {
               authClient.signOut({
                 fetchOptions: {
                   onSuccess: () => {
@@ -52,11 +52,11 @@ export default function UserMenu() {
                 },
               });
             }}
-          >
-            Sign Out
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+                  >
+                      Sign Out
+                  </DropdownMenuItem>
+              </DropdownMenuGroup>
+          </DropdownMenuContent>
+      </DropdownMenu>
   );
 }
