@@ -51,9 +51,6 @@ jobs:
 
           if [ "$DB_COUNT" -gt 0 ] && [ "$OTHER_COUNT" -gt 0 ]; then
             echo "Alteração detectada no banco de dados."
-            exit 0
-          elif [ "$DB_COUNT" -gt 0 ] && [ "$OTHER_COUNT" -gt 0 ]; then
-            echo "Alteração detectada junto com o banco de dados."
             exit 1
           else
             echo "Nenhuma alteração detectada junto com o banco de dados."
