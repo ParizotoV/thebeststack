@@ -2,9 +2,9 @@ name: Check DB Changes
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
     types:
       - opened
       - synchronize
@@ -32,7 +32,6 @@ jobs:
             CURRENT_COMMIT="HEAD"
           fi
 
-          echo "Arquivos alterados:"
           CHANGED_FILES=$(git diff --name-only $BASE_COMMIT $CURRENT_COMMIT)
 
           if [ -z "$CHANGED_FILES" ]; then
